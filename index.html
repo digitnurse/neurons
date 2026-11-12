@@ -1,2 +1,36 @@
 <!doctype html>
-<html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3D Νευρώνες</title><script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script><style>body{margin:0;background:#101827;color:#f3f6fc;font-family:system-ui,sans-serif}header{padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}h1{font-size:1.2rem;margin:0}p{font-size:.9rem;color:#c4cfdf;margin:6px 0 0}model-viewer{display:block;width:100%;height:calc(100dvh - 130px);min-height:400px;background:radial-gradient(circle,#27354b,#0d1422)}footer{padding:12px 24px;font-size:.85rem;color:#c4cfdf}button{border:1px solid #8597b5;background:#263c5e;color:white;border-radius:8px;padding:9px 12px;cursor:pointer}</style></head><body><header><div><h1>Νευρώνες σε 3D</h1><p>Σύρε για περιστροφή · Ροδέλα για zoom · Πάτησε play/pause για animation</p></div><button id="toggle">Παύση animation</button></header><model-viewer id="viewer" src="./neurons.glb" alt="Τρισδιάστατο μοντέλο νευρώνων" camera-controls auto-rotate autoplay animation-crossfade-duration="0" shadow-intensity="0.5" exposure="1" interaction-prompt="auto" loading="eager"></model-viewer><footer id="status">Φόρτωση 3D μοντέλου…</footer><script>const m=document.querySelector('#viewer'),s=document.querySelector('#status'),b=document.querySelector('#toggle');m.addEventListener('load',()=>{s.textContent='Το μοντέλο φορτώθηκε. Μπορείς να το περιστρέψεις και να κάνεις zoom.';if(m.availableAnimations.length){m.animationName=m.availableAnimations[0];m.play();}else{b.hidden=true;s.textContent+=' Δεν βρέθηκε animation.'}});m.addEventListener('error',()=>s.textContent='Δεν φορτώθηκε το μοντέλο. Έλεγξε ότι το neurons.glb βρίσκεται στον ίδιο φάκελο με το index.html.');b.addEventListener('click',()=>{if(m.paused){m.play();b.textContent='Παύση animation'}else{m.pause();b.textContent='Αναπαραγωγή animation'}});</script></body></html>
+<html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>3D Νευρώνες</title><script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js"></script><style>body{margin:0;background:#101827;color:#f3f6fc;font-family:system-ui,sans-serif}header{padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}h1{font-size:1.2rem;margin:0}p{font-size:.9rem;color:#c4cfdf;margin:6px 0 0}model-viewer{display:block;width:100%;height:calc(100dvh - 130px);min-height:400px;background:radial-gradient(circle,#27354b,#0d1422)}footer{padding:12px 24px;font-size:.85rem;color:#c4cfdf}button{border:1px solid #8597b5;background:#263c5e;color:white;border-radius:8px;padding:9px 12px;cursor:pointer}</style></head><body><header><div><h1>Νευρώνες σε 3D</h1><p>Σύρε για περιστροφή · Ροδέλα για zoom · Πάτησε play/pause για animation</p></div><button id="toggle">Παύση animation</button></header><model-viewer id="viewer" src="./neurons.glb" alt="Τρισδιάστατο μοντέλο νευρώνων" camera-controls auto-rotate autoplay animation-crossfade-duration="0" shadow-intensity="0.5" exposure="1" interaction-prompt="auto" loading="eager"></model-viewer><footer id="status">Φόρτωση 3D μοντέλου…</footer><script>const m=document.querySelector('#viewer'),s=document.querySelector('#status'),b=document.querySelector('#toggle');m.addEventListener('load',()=>{s.textContent='Το μοντέλο φορτώθηκε. Μπορείς να το περιστρέψεις και να κάνεις zoom.';if(m.availableAnimations.length){m.animationName=m.availableAnimations[0];m.play();}else{b.hidden=true;s.textContent+=' Δεν βρέθηκε animation.'}});m.addEventListener('error',()=>s.textContent='Δεν φορτώθηκε το μοντέλο. Έλεγξε ότι το neurons.glb βρίσκεται στον ίδιο φάκελο με το index.html.');b.addEventListener('click',()=>{if(m.paused){m.play();b.textContent='Παύση animation'}else{m.pause();b.textContent='Αναπαραγωγή animation'}});</script>
+<div style="text-align:center; padding:20px;">
+  <button id="audioButton"
+    onclick="toggleNarration()"
+    style="padding:14px 24px; font-size:17px;
+           border-radius:12px; cursor:pointer;">
+    ▶ Αναπαραγωγή αφήγησης
+  </button>
+</div>
+
+<audio id="narration" src="./neuron_narration_el.mp3"></audio>
+
+<script>
+  const narration = document.getElementById("narration");
+  const audioButton = document.getElementById("audioButton");
+
+  async function toggleNarration() {
+    if (narration.paused) {
+      try {
+        await narration.play();
+        audioButton.textContent = "⏸ Παύση αφήγησης";
+      } catch (error) {
+        alert("Δεν ήταν δυνατή η αναπαραγωγή του ήχου.");
+      }
+    } else {
+      narration.pause();
+      audioButton.textContent = "▶ Συνέχεια αφήγησης";
+    }
+  }
+
+  narration.addEventListener("ended", () => {
+    audioButton.textContent = "▶ Αναπαραγωγή αφήγησης";
+  });
+</script>
+</body></html>
